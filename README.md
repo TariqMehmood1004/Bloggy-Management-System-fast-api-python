@@ -1,7 +1,16 @@
-# Step 1: Run the following command to start the FastAPI server
-# Step 2: Authorize the user on swagger top-right **> Authorize**
-# Step 3: Add the username and password to the fields under **> Authorize**
-# Step 4: User will be logged in successfully
-# Step 5: Click on **> POST /login** to get the access tokens
-# Step 6: Once tokens are received, user will be able to access protected routes
-# Step 7: Click on **> GET /users/me** to get the current user details
+
+# FastAPI - Blog System
+
+### Step 1: Run the following command to start the FastAPI server
+
+### Step 2: Authorize the user on swagger top-right **> Authorize**
+
+### Step 3: Add the username and password to the fields under **> Authorize**
+
+### Step 4: User will be logged in successfully
+
+### Step 5: Click on **> POST /login** to get the access tokens
+
+### Step 6: Once tokens are received, user will be able to access protected routes
+
+### Step 7: Click on **> GET /users/me** to get the current user details
