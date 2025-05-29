@@ -3,6 +3,13 @@
 
 ### Step 1: 
 Run the following command to start the FastAPI server
+```
+fastapi dev main.py
+```
+
+```
+http://127.0.0.1:8000/docs
+```
 
 ### Step 2: 
 Authorize the user on swagger top-right **> Authorize**
