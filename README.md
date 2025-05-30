@@ -100,3 +100,8 @@ docker search <image_name>
 docker pull <image_name>
 ```
 
+### Step 1:
+docker build -t blog_fastapi_app .
+
+### Step 2:
+docker run -d -p 8000:8000 --name blog_fastapi_container blog_fastapi_app

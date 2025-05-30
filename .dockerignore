@@ -4,8 +4,11 @@ __pycache__/
 *.pyd
 *.sqlite3
 .env
-.venv
-.venv/
+
+*.venv
+*.venv.*
+.venv.*
+
 *.db
 *.log
 .DS_Store

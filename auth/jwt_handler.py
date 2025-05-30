@@ -1,6 +1,5 @@
 from datetime import datetime, timedelta
 from jose import jwt
-import uuid
 from ..config.config import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
 
 def create_access_token(data: dict, expires_delta: timedelta = None):
