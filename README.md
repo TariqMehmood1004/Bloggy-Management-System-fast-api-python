@@ -4,7 +4,7 @@
 ### Step 1: 
 Run the following command to start the FastAPI server
 ```
-fastapi dev main.py
+docker compose up --build
 ```
 
 ```
@@ -101,7 +101,10 @@ docker pull <image_name>
 ```
 
 ### Step 1:
-docker build -t blog_fastapi_app .
+docker compose up --build
 
 ### Step 2:
-docker run -d -p 8000:8000 --name blog_fastapi_container blog_fastapi_app
+uvicorn blog_fast_api_python.main:app --host 0.0.0.0 --port 8000
+
+### Step 3:
+docker compose up
