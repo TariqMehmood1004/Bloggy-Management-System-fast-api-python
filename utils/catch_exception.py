@@ -1,9 +1,10 @@
 from functools import wraps
-from fastapi.responses import JSONResponse
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
-from fastapi import Request, status
 from .api_response_handler import APIResponse
+from jose import JWTError
+from fastapi import HTTPException
+
 
 def catch_exception(view_func):
     @wraps(view_func)
@@ -16,6 +17,12 @@ def catch_exception(view_func):
             return APIResponse.HTTP_404_NOT_FOUND(message=f"Object not found: {str(e)}")
         except MultipleResultsFound as e:
             return APIResponse.HTTP_404_NOT_FOUND(message=f"Multiple objects found: {str(e)}")
+        except JWTError as e:
+            return APIResponse.HTTP_401_UNAUTHORIZED(message=f"Invalid token: {str(e)}")
+        except ValueError as e:
+            return APIResponse.HTTP_401_UNAUTHORIZED(message=f"Invalid token: {str(e)}")
+        except HTTPException as e:
+            return APIResponse.HTTP_401_UNAUTHORIZED(message=f"Invalid token: {str(e)}")
         except Exception as e:
             return APIResponse.HTTP_500_INTERNAL_SERVER_ERROR(message=f"Internal server error: {str(e)}")
     return wrapper

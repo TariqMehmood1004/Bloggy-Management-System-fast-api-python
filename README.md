@@ -28,3 +28,8 @@ Once tokens are received, user will be able to access protected routes
 
 ### Step 7: 
 Click on **> GET /users/me** to get the current user details
+
+---
+
+## Swagger Routes:
+

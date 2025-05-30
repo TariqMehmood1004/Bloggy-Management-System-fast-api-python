@@ -1,5 +1,6 @@
 from fastapi.responses import JSONResponse
 
+
 from starlette.status import (
     HTTP_200_OK, HTTP_201_CREATED, HTTP_204_NO_CONTENT, HTTP_400_BAD_REQUEST,
     HTTP_401_UNAUTHORIZED, HTTP_403_FORBIDDEN, HTTP_404_NOT_FOUND, HTTP_405_METHOD_NOT_ALLOWED,
@@ -14,7 +15,12 @@ class APIResponse:
     @staticmethod
     def HTTP_200_OK(data=None, message="Request successful"):
         return JSONResponse(
-            content={"status": HTTP_200_OK, "code": "HTTP_200_OK", "message": message, "data": data},
+            content={
+                "status": HTTP_200_OK, 
+                "code": "HTTP_200_OK", 
+                "message": message, 
+                "data": data
+            },
             status_code=HTTP_200_OK
         )
 

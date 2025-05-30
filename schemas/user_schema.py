@@ -6,6 +6,7 @@ class UserSchema(BaseModel):
     email: str
     username: str
     password: str
+    is_admin: bool = False
     
     
 class LoginRequest(BaseModel):

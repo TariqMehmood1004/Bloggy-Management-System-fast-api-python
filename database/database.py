@@ -8,4 +8,11 @@ DATABASE_URL = "postgresql://blogFastAPIdb_owner:npg_08ovskEXLxSa@ep-icy-king-a8
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
 Base = declarative_base()
