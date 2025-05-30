@@ -1,5 +1,5 @@
 
-# Bloggy Management System | FastAPIs | Python | Docker | AWS
+## Bloggy Management System | FastAPIs | Python | Docker | AWS
 Bloggy is a blog management system that allows users to create, update, and delete blogs. It is a simple and easy-to-use platform that allows users to create and manage their own blogs. The system is built using FastAPI, Python, Docker, and AWS. Authroization is done using JWT tokens. The system is deployed on AWS using Docker Compose. The system is deployed on AWS using Docker Compose. 
 
 ---
