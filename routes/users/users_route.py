@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, Security, HTTPException
 from sqlalchemy.orm import Session
 from jose import JWTError, jwt
 from uuid import UUID
-from ...schemas.user_schema import UserSchema
+from ...schemas.user_schema import UserSchema, UpdateUserSchema
 from ...models.user import User as UserModel
 from ...models.token import Token as TokenModel
 from ...utils.hash import hash_password
@@ -76,6 +76,29 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = De
         return APIResponse.HTTP_404_NOT_FOUND(message="User not found")
 
     return APIResponse.HTTP_200_OK(data=user.to_dict(), message="User fetched successfully")
+
+# /users/me/update
+@router.put("/users/me/update")
+@catch_exception
+async def update_current_user(new_user: UpdateUserSchema, token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        current_user_id = UUID(payload.get("sub"))
+    except (JWTError, ValueError):
+        return APIResponse.HTTP_401_UNAUTHORIZED(message="Could not validate credentials")
+
+    user = db.query(UserModel).filter(UserModel.id == current_user_id).first()
+    if not user:
+        return APIResponse.HTTP_404_NOT_FOUND(message="User not found")
+
+    user.first_name = new_user.first_name
+    user.last_name = new_user.last_name
+    user.email = new_user.email
+    user.password = hash_password(new_user.password)
+    user.updated_at = datetime.now()
+    db.commit()
+
+    return APIResponse.HTTP_200_OK(data=user.to_dict(), message="User updated successfully")
 
 
 # Delete user based on current Token

@@ -32,4 +32,21 @@ Click on **> GET /users/me** to get the current user details
 ---
 
 ## Swagger Routes:
+### 1. User Routes:
+    * `POST` /register
+    * `POST` /login
+    * `GET` /users/me
+    * `PUT` /users/me/update
+    * `DELETE` /users/me/delete
+    * `DELETE` /users/delete/all
+    * `DELETE` /users/delete/{user_id}
+    * `GET` /users
 
+### 2. Blog Routes:
+    * `GET` /blogs - Get All Blogs
+    * `POST` /blogs - Create Blog
+    * `DELETE` /blogs/delete/all - Delete All Blogs By Authorized
+    * `DELETE` /blogs/{blog_id} - Delete Blog By Authorized
+    * `GET` /blogs/{blog_id} - Get Blog by ID
+    * `PUT` /blogs/update/{blog_id} - Update Blog
+    * `GET` /users/me/blogs - Get All Blogs By Current User
