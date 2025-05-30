@@ -1,5 +1,38 @@
 
-# FastAPI - Blog System
+# Bloggy Management System | FastAPIs | Python | Docker | AWS
+Bloggy is a blog management system that allows users to create, update, and delete blogs. It is a simple and easy-to-use platform that allows users to create and manage their own blogs. The system is built using FastAPI, Python, Docker, and AWS. Authroization is done using JWT tokens. The system is deployed on AWS using Docker Compose. The system is deployed on AWS using Docker Compose. 
+
+---
+
+## Requirements 
+### 1. FastAPI Application: 
+* Create a FastAPI application that supports CRUD (Create, Read, Update, Delete) operations for blog posts. 
+* Use Pydantic models for data validation. 
+
+### 2. PostgreSQL Integration: 
+* Connect the FastAPI application to a PostgreSQL database. 
+* Define database models for blog posts and users. 
+
+### 3. Authentication: 
+* Implement user registration and login functionality using OAuth2 with JWT. 
+* Protect CRUD operations so that only authenticated users can perform these actions. 
+
+### 4. Caching: 
+* Implement caching for read operations using a caching service like Redis. 
+
+### 5. Docker Deployment: 
+* Containerize the application using Docker. 
+* Use Docker Compose to manage multiple containers (e.g., FastAPI app, PostgreSQL, 
+Redis). 
+
+### 6. Nginx Configuration: 
+* Configure Nginx as a reverse proxy to serve the FastAPI application. 
+
+### 7. Unit Testing: 
+* Write unit tests for the application using Pytest. 
+* Ensure tests cover authentication, CRUD operations, and caching functionality. 
+
+---
 
 ### Step 1: 
 Run the following command to start the FastAPI server
