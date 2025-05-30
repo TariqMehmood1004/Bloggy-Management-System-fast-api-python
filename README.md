@@ -50,3 +50,4 @@ Click on **> GET /users/me** to get the current user details
     * `GET` /blogs/{blog_id} - Get Blog by ID
     * `PUT` /blogs/update/{blog_id} - Update Blog
     * `GET` /users/me/blogs - Get All Blogs By Current User
+
