@@ -132,7 +132,9 @@ When you run `docker-compose up --build` it will start the redis server automati
 ---
 
 ## AWS:
-```python3 -m uvicorn main:app --host 0.0.0.0 --port 8000```
+### Run the following command
+1. ```ssh -i "bloggy-fastapi-key.pem" ubuntu@ec2-51-20-96-105.eu-north-1.compute.amazonaws.com```
+2. ```python3 -m uvicorn blog_fast_api_python.main:app --host 0.0.0.0 --port 8000```
 
 ---
 
@@ -146,3 +148,5 @@ When you run `docker-compose up --build` it will start the redis server automati
 ### User Login:
 #### Username: mudassar
 #### Password: pass@123
+
+---
