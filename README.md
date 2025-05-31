@@ -133,3 +133,16 @@ When you run `docker-compose up --build` it will start the redis server automati
 
 ## AWS:
 ```python3 -m uvicorn main:app --host 0.0.0.0 --port 8000```
+
+---
+
+## PUBLIC IP:
+```http://51.20.96.105:8000/docs```
+
+### Admin Login:
+#### Username: johnbrrighte
+#### Password: pass@123
+
+### User Login:
+#### Username: mudassar
+#### Password: pass@123
