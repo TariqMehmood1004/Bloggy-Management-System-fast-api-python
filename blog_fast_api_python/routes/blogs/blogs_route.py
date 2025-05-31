@@ -6,6 +6,7 @@ from ...schemas.blog_schema import BlogSchema
 from ...utils.api_response_handler import APIResponse
 from ...utils.catch_exception import catch_exception
 from ...database.database import get_db
+from ...redis.redis_config import redis_client
 from fastapi.security import OAuth2PasswordBearer
 from ...config.config import SECRET_KEY, ALGORITHM
 from uuid import UUID
@@ -13,6 +14,7 @@ from jose import jwt
 from fastapi import Security
 from sqlalchemy import desc
 from datetime import datetime
+import json
 
 
 # Router
@@ -31,17 +33,15 @@ async def create_blog(
     token: str = Security(oauth2_scheme),
     db: Session = Depends(get_db)
     ):
-    
     payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
     user_id = UUID(payload.get("sub"))
-    
+
     user = db.query(UserModel).filter(UserModel.id == user_id).first()
     if not user:
         return APIResponse.HTTP_404_NOT_FOUND(message="User not found")
-    
+
     print(f"User ID: {user_id}")
 
-    # Inject user_id into the blog model
     new_blog = BlogModel(
         title=blog.title,
         body=blog.body,
@@ -55,18 +55,36 @@ async def create_blog(
     db.commit()
     db.refresh(new_blog)
 
+    # Invalidate Redis cache for blog listing
+    await redis_client.delete("blogs_cache")
+
     return APIResponse.HTTP_201_CREATED(data=new_blog.to_dict(), message="Blog created successfully")
 
 
-# Get All Blogs | Read all the blogs
+# Get All Blogs | Read all the blogs | Caching
 @router.get("/blogs")
 @catch_exception
 async def get_blogs(db: Session = Depends(get_db)):
-    blogs = db.query(BlogModel).order_by(desc(BlogModel.created_at)).all()
-    if not blogs:
+    cache_key = "blogs_cache"
+    
+    # Try to get cached blogs
+    cached_data = await redis_client.get(cache_key)
+    if cached_data:
+        blogs = json.loads(cached_data)
+        return APIResponse.HTTP_200_OK(data=blogs, message="Blogs fetched from cache")
+
+    # If not cached, query the database
+    blogs_query = db.query(BlogModel).order_by(desc(BlogModel.created_at)).all()
+    if not blogs_query:
         return APIResponse.HTTP_404_NOT_FOUND(message="No blogs found")
-    data = [b.to_dict() for b in blogs]
-    return APIResponse.HTTP_200_OK(data=data, message="Blogs fetched successfully")
+
+    blogs = [b.to_dict() for b in blogs_query]
+
+    # Cache the result with an expiration time (e.g., 300 seconds)
+    cache_blog = await redis_client.set(cache_key, json.dumps(blogs), ex=300)
+    print(f"Cached blogs: {cache_blog}")
+
+    return APIResponse.HTTP_200_OK(data=blogs, message="Blogs fetched successfully")
 
 
 # Delete All Blogs
@@ -74,8 +92,8 @@ async def get_blogs(db: Session = Depends(get_db)):
 @catch_exception
 async def delete_all_blogs_by_authorized(
     token: str = Security(oauth2_scheme),
-    db: Session = Depends(get_db)):
-    
+    db: Session = Depends(get_db)
+    ):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         user_id = UUID(payload.get("sub"))
@@ -90,12 +108,16 @@ async def delete_all_blogs_by_authorized(
     if not blogs:
         return APIResponse.HTTP_404_NOT_FOUND(message="User not authorized to delete blogs.")
     
+    data = [b.to_dict() for b in blogs]
+
     for blog in blogs:
         db.delete(blog)
     db.commit()
-    
-    return APIResponse.HTTP_200_OK(message="Blogs deleted successfully", data=[b.to_dict() for b in blogs])
 
+    # Invalidate cached blogs list
+    await redis_client.delete("blogs_cache")
+
+    return APIResponse.HTTP_200_OK(message="Blogs deleted successfully", data=data)
 
 # Delete Blog
 @router.delete("/blogs/{blog_id}")

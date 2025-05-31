@@ -133,11 +133,26 @@ docker search <image_name>
 docker pull <image_name>
 ```
 
+---
+## DOCKER COMPOSE
 ### Step 1:
 docker compose up --build
 
 ### Step 2:
 uvicorn blog_fast_api_python.main:app --host 0.0.0.0 --port 8000
 
-### Step 3:
+### Step 3: No need to build this again
 docker compose up
+
+---
+
+## Redis Server
+When you run *`docker-compose up --build`* it will start the redis server automatically. Because we have defined it in the docker-compose.yml file.
+
+### Stop Redis Server
+```
+docker-compose down
+```
+
+---
+
