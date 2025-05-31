@@ -1,15 +1,15 @@
-from routes.users.users_route import CACHE_KEY
+from blog_fast_api_python.routes.users.users_route import CACHE_KEY
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from models.blog import Blog as BlogModel
-from models.user import User as UserModel
-from schemas.blog_schema import BlogSchema
-from utils.api_response_handler import APIResponse
-from utils.catch_exception import catch_exception
-from database.database import get_db
-from redis.redis_config import redis_client
+from ...models.blog import Blog as BlogModel
+from ...models.user import User as UserModel
+from ...schemas.blog_schema import BlogSchema
+from ...utils.api_response_handler import APIResponse
+from ...utils.catch_exception import catch_exception
+from ...database.database import get_db
+from ...redis.redis_config import redis_client
 from fastapi.security import OAuth2PasswordBearer
-from config.config import SECRET_KEY, ALGORITHM
+from ...config.config import SECRET_KEY, ALGORITHM
 from uuid import UUID
 from jose import jwt
 from fastapi import Security

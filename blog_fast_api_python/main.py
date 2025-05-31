@@ -1,8 +1,8 @@
 from fastapi import FastAPI
-from database.database import engine
-from routes.blogs.blogs_route import router as blogs_router
-from routes.users.users_route import router as users_router
-from redis.redis_config import redis_client
+from .database.database import engine
+from .routes.blogs.blogs_route import router as blogs_router
+from .routes.users.users_route import router as users_router
+from .redis.redis_config import redis_client
 
 
 app = FastAPI()
