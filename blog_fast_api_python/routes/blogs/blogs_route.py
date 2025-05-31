@@ -1,3 +1,4 @@
+from blog_fast_api_python.routes.users.users_route import CACHE_KEY
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from ...models.blog import Blog as BlogModel
@@ -21,7 +22,7 @@ import json
 router = APIRouter()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login")
 
-
+CACHE_KEY = "blogs_cache_"
 
 # --------------------------------
 
@@ -55,9 +56,6 @@ async def create_blog(
     db.commit()
     db.refresh(new_blog)
 
-    # Invalidate Redis cache for blog listing
-    await redis_client.delete("blogs_cache")
-
     return APIResponse.HTTP_201_CREATED(data=new_blog.to_dict(), message="Blog created successfully")
 
 
@@ -65,10 +63,12 @@ async def create_blog(
 @router.get("/blogs")
 @catch_exception
 async def get_blogs(db: Session = Depends(get_db)):
-    cache_key = "blogs_cache"
-    
+        
     # Try to get cached blogs
+    cache_key = CACHE_KEY + "all"
+    
     cached_data = await redis_client.get(cache_key)
+    
     if cached_data:
         blogs = json.loads(cached_data)
         return APIResponse.HTTP_200_OK(data=blogs, message="Blogs fetched from cache")
@@ -83,6 +83,7 @@ async def get_blogs(db: Session = Depends(get_db)):
     # Cache the result with an expiration time (e.g., 300 seconds)
     cache_blog = await redis_client.set(cache_key, json.dumps(blogs), ex=300)
     print(f"Cached blogs: {cache_blog}")
+    print(f"Cached blogs value: {await redis_client.get(cache_key)}")
 
     return APIResponse.HTTP_200_OK(data=blogs, message="Blogs fetched successfully")
 
@@ -207,6 +208,12 @@ async def get_current_user_blogs(token: str = Security(oauth2_scheme), db: Sessi
         return APIResponse.HTTP_404_NOT_FOUND(message="No blogs found")
     
     data = [b.to_dict() for b in blogs]
+
+    # Cache the result with an expiration time (e.g., 15 minutes)
+    cache_key = CACHE_KEY + str(user_id)
+    cache_user_blogs = await redis_client.set(cache_key, json.dumps(data), ex=900)
+    print(f"Cached user MY BLOGS: {cache_user_blogs}")
+    print(f"Cached user MY BLOGS value: {await redis_client.get(cache_key)}")
     
     return APIResponse.HTTP_200_OK(data=data, message="Blogs fetched successfully")
 

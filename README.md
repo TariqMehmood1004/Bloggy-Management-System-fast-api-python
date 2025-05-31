@@ -34,15 +34,11 @@ Redis).
 
 ---
 
-### Step 1: 
-Run the following command to start the FastAPI server
-```
-docker compose up --build
-```
+### Run the following command to start the FastAPI server
+```fastapi dev .\blog_fast_api_python\main.py```
 
-```
-http://127.0.0.1:8000/docs
-```
+### Step 1: Swagger
+```http://127.0.0.1:8000/docs```
 
 ### Step 2: 
 Authorize the user on swagger top-right **> Authorize**
@@ -85,74 +81,33 @@ Click on **> GET /users/me** to get the current user details
     * `GET` /users/me/blogs - Get All Blogs By Current User
 
 ---
-## Docker
-### IMAGES
-Docker images are a lightweight, standalone, executable package of software that includes everything needed to run an application: code, runtime, system tools, system libraries and settings.
 
-### Build an Image from a Dockerfile
-#### Build an Image from a Dockerfile without the cache
-```
-docker build -t <image_name> . –no-cache
-```
-
-#### List local images
-```
-docker images
-```
-
-#### Delete an Image
-```
-docker rmi <image_name>
-```
-
-#### Remove all unused images
-```
-docker image prune
-```
----
-## DOCKER HUB
-Docker Hub is a service provided by Docker for finding and sharing container images with your team. Learn more and find images at https://hub.docker.com
-
-### Login into Docker
-```
-docker login -u <username>
-```
-
-### Publish an image to Docker Hub
-```
-docker push <username>/<image_name>
-```
-
-### Search Hub for an image
-```
-docker search <image_name>
-```
-
-### Pull an image from a Docker Hub
-```
-docker pull <image_name>
-```
-
----
 ## DOCKER COMPOSE
 ### Step 1:
-docker compose up --build
+```docker compose up --build```
 
 ### Step 2:
-uvicorn blog_fast_api_python.main:app --host 0.0.0.0 --port 8000
+```uvicorn blog_fast_api_python.main:app --host 0.0.0.0 --port 8000```
 
 ### Step 3: No need to build this again
-docker compose up
+```docker compose up```
 
 ---
 
 ## Redis Server
-When you run *`docker-compose up --build`* it will start the redis server automatically. Because we have defined it in the docker-compose.yml file.
+When you run `docker-compose up --build` it will start the redis server automatically. Because we have defined it in the docker-compose.yml file.
 
 ### Stop Redis Server
-```
-docker-compose down
-```
+```docker-compose down```
+
+### Step to delete all volumes
+```docker-compose down --volumes```
 
 ---
 
+## Pytest
+### Run Test:
+```pytest```
+
+### Run pytest with -s flag to see print output:
+```pytest -s```

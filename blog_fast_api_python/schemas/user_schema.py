@@ -1,13 +1,18 @@
 from pydantic import BaseModel
 
+class AdminUserSchema(BaseModel):
+    first_name: str
+    last_name: str
+    email: str
+    username: str
+    password: str
+
 class UserSchema(BaseModel):
     first_name: str
     last_name: str
     email: str
     username: str
     password: str
-    is_admin: bool = False
-
 
 class UpdateUserSchema(BaseModel):
     first_name: str
