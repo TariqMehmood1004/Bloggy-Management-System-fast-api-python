@@ -2,18 +2,18 @@ from fastapi import APIRouter, Depends, Security, HTTPException
 from sqlalchemy.orm import Session
 from jose import JWTError, jwt
 from uuid import UUID
-from ...schemas.user_schema import UserSchema, UpdateUserSchema, AdminUserSchema
-from ...models.user import User as UserModel
-from ...models.token import Token as TokenModel
-from ...utils.hash import hash_password
-from ...utils.api_response_handler import APIResponse
-from ...utils.catch_exception import catch_exception
-from ...auth.jwt_handler import create_access_token
-from ...config.config import SECRET_KEY, ALGORITHM
-from ...database.database import get_db
+from schemas.user_schema import UserSchema, UpdateUserSchema, AdminUserSchema
+from models.user import User as UserModel
+from models.token import Token as TokenModel
+from utils.hash import hash_password
+from utils.api_response_handler import APIResponse
+from utils.catch_exception import catch_exception
+from auth.jwt_handler import create_access_token
+from config.config import SECRET_KEY, ALGORITHM
+from database.database import get_db
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy import desc
-from ...redis.redis_config import redis_client
+from redis.redis_config import redis_client
 import json
 
 
