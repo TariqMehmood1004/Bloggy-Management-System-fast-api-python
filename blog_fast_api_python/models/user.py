@@ -1,9 +1,9 @@
 from sqlalchemy import Column, String, Boolean
-from ..database.database import Base
+from database.database import Base
 from sqlalchemy.dialects.postgresql import UUID
 import uuid
 from sqlalchemy import DateTime, func
-from ..utils.hash import verify_password
+from utils.hash import verify_password
 
 uuid4 = uuid.uuid4
 
