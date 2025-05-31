@@ -13,7 +13,7 @@ from config.config import SECRET_KEY, ALGORITHM
 from database.database import get_db
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy import desc
-from redis.redis_config import redis_client
+from .redis.redis_config import redis_client
 import json
 
 
