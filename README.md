@@ -128,3 +128,8 @@ When you run `docker-compose up --build` it will start the redis server automati
 
 ### Install nginx
 ```sudo apt install nginx```
+
+---
+
+## AWS:
+```python3 -m uvicorn main:app --host 0.0.0.0 --port 8000```
