@@ -119,3 +119,12 @@ When you run `docker-compose up --build` it will start the redis server automati
 
 ### Run pytest with -s flag to see print output:
 ```pytest -s tests/test_users.py```
+
+---
+
+## Nginx Installation with Ubuntu:
+### Update the Ubuntu:
+```sudo apt update```
+
+### Install nginx
+```sudo apt install nginx```
