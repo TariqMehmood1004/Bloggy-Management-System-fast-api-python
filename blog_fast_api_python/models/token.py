@@ -1,7 +1,7 @@
 # models/token.py
 from sqlalchemy import Column, String, ForeignKey, DateTime
 from sqlalchemy.dialects.postgresql import UUID
-from database.database import Base
+from ..database.database import Base
 import uuid
 from sqlalchemy import DateTime, func
 
