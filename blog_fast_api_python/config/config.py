@@ -1,7 +1,12 @@
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
 # JWT Config
-SECRET_KEY = "T6Hsx0XNZGJHWg5XIyxpf7J6Cv_-O9pYWtoHciDrq5t694U84J8fkjA31P02BCS7hzHJ7dUAk8Egf21k_hZOEA"
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+SECRET_KEY = os.getenv("SECRET_KEY")
+ALGORITHM = os.getenv("ALGORITHM")
+ACCESS_TOKEN_EXPIRE_MINUTES = os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES")
 
 # import secrets
 # secret_key = secrets.token_urlsafe(64)
