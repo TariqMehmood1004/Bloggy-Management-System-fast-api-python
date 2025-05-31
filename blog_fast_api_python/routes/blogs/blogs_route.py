@@ -1,4 +1,4 @@
-from blog_fast_api_python.routes.users.users_route import CACHE_KEY
+from .routes.users.users_route import CACHE_KEY
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from ...models.blog import Blog as BlogModel
