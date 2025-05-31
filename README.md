@@ -111,3 +111,11 @@ When you run `docker-compose up --build` it will start the redis server automati
 
 ### Run pytest with -s flag to see print output:
 ```pytest -s```
+
+---
+## Pytest for specific file
+### Run Test:
+```pytest tests/test_users.py```
+
+### Run pytest with -s flag to see print output:
+```pytest -s tests/test_users.py```
